@@ -1,0 +1,45 @@
+If we select this research topic:
+
+"{SELECTED_TOPIC}"
+
+Confirm the novelty and uniqueness of this topic through a thorough research-oriented analysis.
+
+Please check whether this topic is rare, unique, and suitable for an IEEE-style research paper. Compare it against existing related work and clearly explain how the proposed idea can be positioned as novel rather than generic or already overused.
+
+Also select the final and best dataset for implementing this topic. The dataset should make the implementation strong, feasible, and as novel/unique as possible. Prefer public datasets that can be implemented in Google Colab.
+
+For the selected topic, provide:
+
+1. Novelty confirmation
+   - Why this topic is unique
+   - How it differs from common existing approaches
+   - What gap it addresses
+   - Why it is suitable for an IEEE conference paper
+
+2. Existing-work comparison
+   - What related work usually focuses on
+   - What limitation remains unresolved
+   - How this proposed topic improves or differs from that work
+
+3. Final selected dataset
+   - Dataset name
+   - Why this is the best dataset
+   - Why it supports the novelty of the paper
+   - Dataset suitability for Colab implementation
+   - Expected input/output structure
+
+4. Implementation direction
+   - Suggested model or framework
+   - Main experimental pipeline
+   - What makes the implementation different from a basic baseline
+
+5. Evaluation metrics
+   - Primary metrics
+   - Secondary metrics
+   - Any special metric that supports the novelty claim
+   - Why each metric is relevant
+
+6. Final recommendation
+   - Confirm whether this topic should be selected or rejected
+   - If selected, provide a refined IEEE-style title
+   - Provide 3-5 clear contribution points

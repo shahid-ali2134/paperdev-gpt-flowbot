@@ -1,0 +1,26 @@
+Perfect! Confirm all those points that will make this paper novel and unique.
+
+Now write:
+1. A refined IEEE conference-style research title.
+2. An IEEE-style abstract of 120-130 words only.
+
+Output format requirement:
+Start your response with exactly these two fields:
+
+Paper Title: <final refined IEEE conference-style title>
+
+Abstract:
+<120-130 word abstract>
+
+The abstract must:
+- Focus strongly on the novelty and uniqueness of the proposed topic.
+- Clearly mention the research gap, proposed method, dataset direction, and expected contribution.
+- Sound suitable for an IEEE conference paper.
+- Avoid generic wording.
+- Do not mention Google Colab.
+- Stay strictly within 120-130 words.
+
+After the abstract, also provide:
+- Final novelty points
+- Final selected dataset
+- Final evaluation metrics

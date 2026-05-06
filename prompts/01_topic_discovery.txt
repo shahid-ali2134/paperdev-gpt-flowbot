@@ -1,0 +1,38 @@
+I have to write a research paper for an IEEE conference. My members want me to select the most unique, rare, and novel research topic for this paper.
+
+The available conference topic area is:
+
+"{TOPIC_AREA}"
+
+The relevant keywords or focus terms are:
+
+"{KEYWORDS_OR_FOCUS}"
+
+Make proper research and suggest novel, unique, rare, and practically implementable research topics that would be suitable for an IEEE-style paper. Since my background is in AI/ML, suggest topics that are related to AI, machine learning, deep learning, computer vision, NLP, LLMs, generative AI, agentic AI, predictive modeling, classification, anomaly detection, optimization, or intelligent systems where appropriate.
+
+The topics should also be feasible to implement in Google Colab using public datasets or easily accessible data sources.
+
+Important constraints:
+1. Do not suggest generic or overused topics.
+2. Do not suggest topics that have already been selected in my previous chats.
+3. Prefer topics with clear novelty, dataset availability, implementation feasibility, and measurable experimental results.
+4. For each suggested topic, provide:
+   - IEEE-style suggested title
+   - Core idea
+   - Why it is novel or rare
+   - Possible datasets
+   - Colab feasibility
+   - Possible contribution
+   - Expected evaluation metrics
+5. Rank the topics from strongest to weakest based on novelty, feasibility, and publication potential.
+
+Output format requirement:
+At the very top of your response, before any explanation, write exactly one line:
+
+FIRST_RECOMMENDED_TOPIC: <the exact IEEE-style title of the strongest ranked topic>
+
+Then provide the ranked topic analysis below it.
+
+Previously selected topics to avoid:
+
+"{PREVIOUSLY_SELECTED_TOPICS}"

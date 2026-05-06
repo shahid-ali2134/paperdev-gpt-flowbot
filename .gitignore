@@ -1,0 +1,9 @@
+.env
+.env.example
+__pycache__/
+*.pyc
+.pytest_cache/
+browser_profile/PaperDevProfile/
+app_storage/logs/*.log
+app_storage/*.bak.json
+*.bak
