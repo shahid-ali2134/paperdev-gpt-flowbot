@@ -33,10 +33,8 @@ class ChatGPTController:
         page = await self.start_browser()
         target_url = chat_url or self.chatgpt_url
         if not self._same_page(page.url, target_url):
-            await page.goto(target_url, wait_until="domcontentloaded", timeout=60000)
-            await self._find_prompt_input(timeout_ms=15000)
-        else:
-            await asyncio.sleep(1)
+            await page.goto(target_url, wait_until="commit", timeout=30000)
+            await self._find_prompt_input(timeout_ms=8000)
         await self._ensure_logged_in_hint()
 
     async def _ensure_logged_in_hint(self) -> None:
@@ -55,26 +53,27 @@ class ChatGPTController:
             try:
                 if await button.count():
                     await button.first.click(timeout=5000)
-                    await asyncio.sleep(1)
+                    await self._find_prompt_input(timeout_ms=3000)
                     return
             except Exception:
                 logger.debug("New chat button failed: %s", name, exc_info=True)
-        await page.goto(self.chatgpt_url, wait_until="domcontentloaded", timeout=30000)
+        await page.goto(self.chatgpt_url, wait_until="commit", timeout=30000)
+        await self._find_prompt_input(timeout_ms=3000)
 
     async def send_prompt(self, prompt_text: str) -> None:
         page = self._page()
-        input_box = await self._find_prompt_input()
+        input_box = await self._find_prompt_input(timeout_ms=1000)
         try:
-            await input_box.click(timeout=10000)
-            await input_box.fill(prompt_text, timeout=20000)
+            await input_box.click(timeout=3000)
+            await input_box.fill(prompt_text, timeout=5000)
         except Exception:
-            await input_box.click(timeout=10000)
+            await input_box.click(timeout=3000)
             await page.keyboard.insert_text(prompt_text)
         for selector in SEND_BUTTON_SELECTORS:
             button = page.locator(selector).first
             try:
                 if await button.count():
-                    await button.click(timeout=5000)
+                    await button.click(timeout=1000)
                     return
             except Exception:
                 logger.debug("Send button selector failed: %s", selector, exc_info=True)
@@ -119,12 +118,21 @@ class ChatGPTController:
     async def close_browser(self) -> None:
         await self.chrome.close_browser()
 
-    async def _find_prompt_input(self, timeout_ms: int = 5000):
+    async def _find_prompt_input(self, timeout_ms: int = 1000):
         page = self._page()
+        combined_selector = ", ".join(CHATGPT_MAIN_INPUT_SELECTORS)
+        combined = page.locator(combined_selector).first
+        try:
+            await combined.wait_for(state="visible", timeout=timeout_ms)
+            return combined
+        except Exception:
+            logger.debug("Combined prompt input selector failed.", exc_info=True)
+
+        fallback_timeout = min(timeout_ms, 500)
         for selector in CHATGPT_MAIN_INPUT_SELECTORS:
             loc = page.locator(selector).first
             try:
-                await loc.wait_for(state="visible", timeout=timeout_ms)
+                await loc.wait_for(state="visible", timeout=fallback_timeout)
                 return loc
             except Exception:
                 logger.debug("Prompt input selector failed: %s", selector, exc_info=True)
@@ -136,8 +144,10 @@ class ChatGPTController:
         target = target_url.rstrip("/")
         if current == target:
             return True
-        if "/c/" in target and current == target:
-            return True
+        current_chat = ChatGPTController._conversation_id_from_url(current)
+        target_chat = ChatGPTController._conversation_id_from_url(target)
+        if target_chat:
+            return bool(current_chat and current_chat == target_chat)
         return bool(current.startswith("https://chatgpt.com") and target == "https://chatgpt.com")
 
     async def _fill_rename_dialog(self, new_name: str) -> None:
